@@ -1,24 +1,29 @@
-import { useEffect ,useState} from "react"
+import { useState, useEffect } from "react";
 
+useState;
+function useCurrencyInfo(from, to) {
+  
+  const [data, setData] = useState({});
+  useEffect(() => {
+    fetch(
+      `https://api.frankfurter.app/latest?amount=1&from=${from.toLocaleUpperCase()}&to=${to.toLocaleUpperCase()}`
+    )
+      .then((res) => res.json())
+      .then((res) => setData(res));
+  }, [from, to]);
 
-const useCurrencyInfo=(currency)=>{
-    const [countries, setContries] = useState({})
-    const [data, setData] = useState({})
-    useEffect(() => {
-    fetch(`https://api.frankfurter.app/currencies`)
-    .then((res)=>res.json())
-    .then((res)=>setContries(res));
-     console.log(countries);
-
-    //  fetch(`https://api.frankfurter.app/latest?amount=10&from=INR&to=USD`)
-    //  .then((res1)=>res1.json())
-    // .then((res1)=>setData(res1));
-     
-    }, [currency])
-    // console.log(countries);
-    // console.log(data);
-    const newData=[countries,data]
-    return countries;
-    
+  
+  return data;
+  return {
+    INR: 83.72,
+  };
 }
+
 export default useCurrencyInfo;
+
+// amount: 1;
+// base: "USD";
+// date: "2024-07-30";
+// rates: {
+//   INR: 83.72;
+// }
