@@ -19,8 +19,8 @@ function Register() {
   };
 
   return (
-    <>
-      <form className="flex flex-col items-center p-2">
+    <div className="h-[100vh] dark:text-[#dce1fd] dark:bg-[#2d2f36]">
+      <form className="flex flex-col items-center text-black">
         <input
           type="text"
           id="username"
@@ -59,10 +59,7 @@ function Register() {
         />
         <button onClick={handleRegister}>Register</button>
       </form>
-      {Object.keys(newUser).map((entity, i) => (
-        <p key={i}>{`${entity} is ${newUser[entity]}`}</p>
-      ))}
-    </>
+    </div>
   );
 }
 

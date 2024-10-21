@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { UserProvider } from "./context/userContext";
 
 import MyRouter from "./EssencialComp/MyRouter";
@@ -9,13 +9,11 @@ function App() {
     JSON.parse(localStorage.getItem("currUser")) || {}
   );
   const [isLogin, setisLogin] = useState(currUser.username&&true||false);
+  const [searchQuery,setSearchQuery]=useState(false);
   const cart = currUser.cart;
   const setUserCart = (item) => {
     setCurrUser((prev) => ({ ...prev, cart: item }));
   };
-
-  console.log(currUser);
-  console.log(isLogin);
 
   const discountPrice = (price, discountPercent) => {
     return price - (discountPercent * price) / 100;
@@ -24,9 +22,13 @@ function App() {
   useEffect(() => {
     localStorage.setItem("currUser", JSON.stringify(currUser));
     localStorage.setItem("users", JSON.stringify(users));
+    
   }, [currUser,users]);
 
   return (
+
+
+    
     <UserProvider
       value={{
         currUser,
@@ -36,11 +38,12 @@ function App() {
         cart,
         users,
         setUsers,
-        isLogin, setisLogin
+        isLogin, setisLogin,searchQuery,setSearchQuery
       }}
     >
       <MyRouter />
     </UserProvider>
+
   );
 }
 

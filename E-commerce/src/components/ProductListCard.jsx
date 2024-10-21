@@ -1,24 +1,34 @@
 import Asured from "../assets/extras/Asured.webp";
 import { Link, useParams } from "react-router-dom";
+import { useUserContext } from "../context/userContext";
+import { useEffect } from "react";
 
-function ProductCard({ Products, discount = 0 }) {
+function ProductCard({ Products, discount = 0,search}) {
   const discountPrice = (price, discount) => {
     return price - (discount * price) / 100;
   };
+  const {searchQuery,setSearchQuery}=useUserContext()
   const params = useParams();
   // destructure product obj form filtered category Array
-  const [productObj] = Products.filter(
-    (cat) => cat.category == params.Categoty
+  const productsArray = Products.filter(
+    (cat) =>(searchQuery? cat.productName.toLowerCase().includes(searchQuery):cat.category == params.Categoty)
   );
 
-  const productsArray = productObj.products;
+  
+  useEffect(() => {
+    setSearchQuery(searchQuery||"")
+    return ()=>{
+      setSearchQuery(false)
+    }
+  }, [])
+  
 
   return (
     <>
-    <div className="ListProd max-w-4xl m-auto dark:text-[#dce1fd] dark:bg-[#2d2f36]">
+    <div className="ListProd  dark:text-[#dce1fd] dark:bg-[#2d2f36]  min-h-screen">
     {productsArray.map((product) => (
-        <div key={product.productId} className="mb-4 border">
-          <Link to={`${product.productId}`}>
+        <div key={product.productId} className="border max-w-4xl m-auto">
+          <Link to={search?`pid/${product.productId}`:`${product.productId}`}>
             <div className="productcard px-3 flex justify-start gap-2 ">
               <div className="left flex justify-center items-center min-w-32 ">
                 <img

@@ -11,6 +11,7 @@ function ImageCarousel({
   prodMode = false,
 }) {
   const [curImg, setCurImg] = useState(0);
+  const [autoChange, setautoChange] = useState(start);
 
   const previous = () => {
     setCurImg((prev) => (prev <= 0 ? images.length - 1 : --prev));
@@ -19,7 +20,7 @@ function ImageCarousel({
   const next = () => {
     setCurImg((prev) => (prev < images.length - 1 ? ++prev : 0));
   };
-  start &&
+  autoChange &&
     useEffect(() => {
       const timer = setInterval(() => {
         next();

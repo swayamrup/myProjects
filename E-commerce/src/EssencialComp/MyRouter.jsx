@@ -9,11 +9,11 @@ import {
     Login,
     Register,
   } from "../index";
-import {  RouterProvider,createBrowserRouter, useParams } from "react-router-dom";
+import {  RouterProvider,createBrowserRouter, } from "react-router-dom";
 import Products from "../assets/productsData";
 function MyRouter({children}) {
-
     const discount = 10;
+  
   
     const router = createBrowserRouter([
         {
@@ -32,7 +32,13 @@ function MyRouter({children}) {
               ),
             },
             {
-              path: ":Category/:productId",
+              path: `:Category/:productId`,
+              element: (
+                <ProductDetails discount={discount} Products={Products} />
+              ),
+            },
+            {
+              path: `pid:productId`,
               element: (
                 <ProductDetails discount={discount} Products={Products} />
               ),
@@ -43,7 +49,7 @@ function MyRouter({children}) {
             },
             {
               path: "login",
-              element: <Login />,
+              element:<Login />,
             },
             {
               path: "register",

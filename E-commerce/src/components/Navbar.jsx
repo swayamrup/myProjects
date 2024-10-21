@@ -1,13 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/userContext";
 import Menu from "./Menu";
+import SearchBar from "./SearchBar";
 import {
   _3Dot,
   Hamburger,
   croplogo,
   kart as karticon,
   mbDwnArow as mobileDownArrow,
-  searchIcon,
   storeIcon,
   profile as profilelogo,
 } from "../assets/nav_imgs/_nav_Img";
@@ -30,46 +30,35 @@ function Navbar({ className }) {
       setCurrUser({});
       setisLogin(false);
     }
-    !isLogin&&navigate("/login")
+    !isLogin && navigate("/login");
   };
-
-
-
-
 
   return (
     <>
-      <div
-        className={`"header flex px-3 py-1  items-center justify-between lg:px-12" ${className}  dark:text-[#d7dcfb] dark:bg-[#353740]`}
-      >
-        <div className="left flex gap-x-2">
-          <img
-            src={Hamburger}
-            alt="Hamburger "
-            className=""
-            onClick={() => {
-              document.getElementById("root").classList.toggle("dark");
-            }}
-          />
-          <img
-            src={croplogo}
-            alt="logo"
-            className="min-w-[20px]"
-            onClick={gotoHome}
-          />
+      <div className="navbar  flex justify-between items-center gap-2 dark:text-[#d7dcfb] dark:bg-[#353740] sm:px-10">
+        <div className="left">
+          <div className="flex gap-2 p-1">
+            <img
+              src={Hamburger}
+              alt="Hamburger"
+              className=""
+              onClick={() => {
+                document.getElementById("root").classList.toggle("dark");
+              }}
+            />
+            <img
+              src={croplogo}
+              alt="logo"
+              className="min-w-20"
+              onClick={gotoHome}
+            />
+          </div>
         </div>
-
-        {/* search box  hidden when sereen < md */}
-        <div className="search bg-[#f0f5ff] px-4 py-1 justify-center m-3 rounded-md hidden sm:flex   dark:bg-[#353740]">
-          <img src={searchIcon} alt="searchIcon" className="min-w-[19px]" />
-          <input
-            type="text"
-            placeholder="Search for Products, Brands and More"
-            className=" bg-[#f0f5ff] min-w-[300px] p-2 md:min-w-[400px] sm:py-1  outline-none  dark:bg-[#353740]"
-          />
-        </div>
-        <div className="right ">
-          <div className="flex items-stretch gap-x-3">
+        <span className="search hidden sm:block  sm:min-w-[30%] ">
+          <SearchBar />
+        </span>
+        <div className="right">
+          <div className="flex gap-2">
             <img src={mobileDownArrow} alt="mobileDownArrow" className="" />
             <div className="shortuserProfile flex sm:hidden">
               <img src={profilelogo} alt="profilelogo" className="" />
@@ -81,26 +70,24 @@ function Navbar({ className }) {
             >
               <Menu userName={user && user.username} />
             </div>
-            {/* <img src={karticon} alt="karticon" className="" /> */}
-            <Link to={isLogin ? "/cart" : "/login"} className="self-center">
-              <img src={karticon} alt="karticon" className="" />
-            </Link>
-            <Link to={""} className="self-center">
-              <img src={storeIcon} alt="storeIcon" />
-            </Link>
+
+            <img
+              src={karticon}
+              alt="karticon"
+              className=""
+              onClick={() => navigate(isLogin ? "/cart" : "/login")}
+            />
+
+            <img src={storeIcon} alt="storeIcon" />
+
             <img src={_3Dot} alt="_3Dot" />
           </div>
         </div>
       </div>
-      {/* search box  hidden when sereen > md   */}
-      <div className="search flex bg-[#f0f5ff] px-4 py-1 justify-start m-3 rounded-md sm:hidden">
-        <img src={searchIcon} alt="searchIcon" className="min-w-[15px] " />
-        <input
-          type="text"
-          placeholder="Search for Products, Brands and More"
-          className=" bg-[#f0f5ff] px-2  text-black "
-        />
-      </div>
+      <div className="search px-2 sm:hidden  dark:text-[#d7dcfb] dark:bg-[#353740]">
+          <SearchBar />
+        </div>
+        <hr className="p-1 dark:bg-[#353740]"/>
     </>
   );
 }

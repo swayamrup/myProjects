@@ -3,10 +3,11 @@ import { useUserContext } from "../context/userContext";
 import ImageCarousel from "./ImageCarousel";
 import Asured from "../assets/extras/Asured.webp";
 
+
 function productDetails({ Products = {}, discount = 44, className = "" }) {
   const param = useParams();
   const navigate = useNavigate();
-  const { discountPrice, setUserCart, cart, isLogin } = useUserContext();
+  const { discountPrice, setUserCart, cart, isLogin,} = useUserContext();
   const getDeliveryDetails = (delivaryafterdays = 3) => {
     let delevery = new Date(Date.now() + 86400000 * delivaryafterdays);
     return `Free delivery by ${delevery.toLocaleDateString("en", {
@@ -15,10 +16,9 @@ function productDetails({ Products = {}, discount = 44, className = "" }) {
       month: "short",
     })}`;
   };
-  const [currentCategory] = Products.filter(
-    (obj) => obj.category == param.Category
-  );
-  const [currentProduct] = currentCategory.products.filter(
+  // console.log(param);
+  
+  const [currentProduct] = Products.filter(
     (prod) => prod.productId == param.productId
   );
   const productPresentInCart = (cart, product) => {
@@ -41,12 +41,11 @@ function productDetails({ Products = {}, discount = 44, className = "" }) {
     };
   };
 
-  // console.log(cart);
-
   const dis =
     "Introducing the SkyBreeze 3000, a portable air purifier designed to refresh any space. With its triple-layer filtration, it removes 99% of airborne pollutants, offering clean, crisp air. Silent operation and sleek design make it perfect for home or office. Breathe better, live healthier with the SkyBreeze 3000!";
 
   let isalreadyPresent = isLogin && productPresentInCart(cart, currentProduct);
+
 
   return (
     <>
@@ -99,17 +98,13 @@ function productDetails({ Products = {}, discount = 44, className = "" }) {
           <div
             className="w-1/2  bg-white p-2 cursor-pointer "
             onClick={() => {
-              // if (isLogin&&isalreadyPresent) {
-              //   navigate("/cart");
-              // } else setUserCart([...cart, createCartItem(currentProduct)]);
               if (isLogin) {
                 if (isalreadyPresent) {
                   navigate("/cart");
                 } else {
                   setUserCart([...cart, createCartItem(currentProduct)]);
                 }
-              }
-              else{
+              } else {
                 navigate("/login");
               }
             }}

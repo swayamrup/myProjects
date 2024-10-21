@@ -7,7 +7,7 @@ function Card({ categories = [], className }) {
           categories.map((cat, index) => (
             <Link to={`${cat.category}`} key={index}>
               <div className="category flex flex-col items-center justify-center p-2  ">
-                <img src={cat.categoryImage} alt={cat.category} className="max-w-16" />
+                <img src={cat.categoryImg} alt={cat.category} className="max-w-16" />
                 <p className="">{cat.category}</p>
               </div>
             </Link>
